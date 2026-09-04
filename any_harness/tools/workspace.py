@@ -1,4 +1,5 @@
 """Google ADK toolset for scoped local workspace operations."""
+
 from __future__ import annotations
 import os
 import re
@@ -246,9 +247,7 @@ class WorkspaceToolset(BaseToolset):
 
     @override
     @classmethod
-    def from_config(
-        cls: type[WorkspaceToolset], config: ToolArgsConfig, config_abs_path: str
-    ) -> WorkspaceToolset:
+    def from_config(cls: type[WorkspaceToolset], config: ToolArgsConfig, config_abs_path: str) -> WorkspaceToolset:
         config_values = config.model_dump()
         workspace_dir = config_values.pop("workspace_dir", None)
         return cls(root=workspace_dir, **config_values)
@@ -314,7 +313,7 @@ class WorkspaceToolset(BaseToolset):
                     "This folder is home. Treat it that way.",
                     "Write It Down - No Mental Notes!",
                     "Always read_file before editing. Use the exact substring from its line-numbered output as "
-                    "edit_file's old_str. Do not guess file contents or pass line numbers to edit_file."
+                    "edit_file's old_str. Do not guess file contents or pass line numbers to edit_file.",
                 ]
             )
 
@@ -440,7 +439,7 @@ class WorkspaceToolset(BaseToolset):
                         candidate = current / name
                         try:
                             self._resolve_path(candidate.relative_to(self.root).as_posix())
-                        except (ValueError, OSError):
+                        except ValueError, OSError:
                             continue
                         if self._is_excluded(candidate) or (pattern and not fnmatch(name, pattern)):
                             continue
@@ -449,7 +448,7 @@ class WorkspaceToolset(BaseToolset):
                 for candidate in base.glob(pattern):
                     try:
                         self._resolve_path(candidate.relative_to(self.root).as_posix())
-                    except (ValueError, OSError):
+                    except ValueError, OSError:
                         continue
                     if not self._is_excluded(candidate):
                         entries.append(candidate)
@@ -457,7 +456,7 @@ class WorkspaceToolset(BaseToolset):
                 for candidate in base.iterdir():
                     try:
                         self._resolve_path(candidate.relative_to(self.root).as_posix())
-                    except (ValueError, OSError):
+                    except ValueError, OSError:
                         continue
                     if not self._is_excluded(candidate):
                         entries.append(candidate)
@@ -508,7 +507,7 @@ class WorkspaceToolset(BaseToolset):
                     file_path = current / filename
                     try:
                         resolved = self._resolve_path(file_path.relative_to(self.root).as_posix())
-                    except (ValueError, OSError):
+                    except ValueError, OSError:
                         continue
                     if self._is_excluded(file_path) or file_path.suffix.lower() not in TEXT_EXTENSIONS:
                         continue

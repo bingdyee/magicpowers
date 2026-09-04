@@ -40,33 +40,14 @@ toolset = DocumentConversionToolset(root="./workspace")
 The converter rejects accidental overwrites unless `overwrite=True` (or
 `--overwrite`) is supplied.
 
-## Documentation and book reader
+## 书籍阅读
 
-The Docsify site reads books from `docs/ebooks/`. Convert a book into that
-directory, add its link to the static bookshelf when needed, then preview the
-site:
-
-```bash
-uv run magicpowers ebook-convert book.epub -o docs/ebooks/book.md
-make docs-serve
-```
-
-Open <http://127.0.0.1:3000>. The reader provides a book sidebar, chapter
-outline, full-text search, image zoom, previous/next navigation, reading
-progress, and automatic position restoration.
-
-## Development
-
-Common workflows are available through the Makefile:
+左侧“书籍”栏目收录 `docs/ebooks/` 目录中的 Markdown 书籍，并提供章节导航、全文搜索、
+图片缩放、翻页、阅读进度和上次阅读位置恢复。
 
 ```bash
-make help
-make sync
-make check
-make ebook-convert SOURCE=book.epub OUTPUT=docs/ebooks/book.md
 make book-add SOURCE=book.epub
 make docs-serve
 ```
 
-Use `PORT=8080` or `DOCS_DIR=path/to/docs` to override the documentation
-preview defaults. The `docs-serve` target requires the Docsify CLI.
+新增书籍后，在 `_sidebar.md` 和 `ebooks/README.md` 中补充对应链接即可。

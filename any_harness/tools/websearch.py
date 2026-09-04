@@ -1,4 +1,5 @@
 """Google ADK toolset for web and news search through DDGS."""
+
 from __future__ import annotations
 
 import asyncio
@@ -155,11 +156,11 @@ class WebSearchToolset(BaseToolset):
     def load_web_page(self, url: str) -> str:
         """Fetches the content in the url and returns the text in it.
 
-         Args:
-             url (str): The url to browse.
+        Args:
+            url (str): The url to browse.
 
-         Returns:
-             str: The text content of the url.
+        Returns:
+            str: The text content of the url.
         """
         fetch_response = cast(
             Callable[[str], requests.Response] | None,
@@ -171,7 +172,7 @@ class WebSearchToolset(BaseToolset):
 
         try:
             response = fetch_response(url)
-        except (ValueError, requests.RequestException):
+        except ValueError, requests.RequestException:
             return f"Failed to fetch url: {url}"
 
         if response.status_code != 200:
@@ -191,9 +192,6 @@ class WebSearchToolset(BaseToolset):
 
     @override
     @classmethod
-    def from_config(
-          cls: type[WebSearchToolset], config: ToolArgsConfig, config_abs_path: str
-    ) -> WebSearchToolset:
+    def from_config(cls: type[WebSearchToolset], config: ToolArgsConfig, config_abs_path: str) -> WebSearchToolset:
         del config_abs_path
         return cls(**config.model_dump())
-

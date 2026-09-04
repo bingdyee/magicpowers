@@ -18,7 +18,7 @@ def load_skills_from_dir(skills_dir: Path | str) -> list[models.Skill]:
         return skills
     for skill_dir in sorted(skills_base_path.iterdir()):
         if not skill_dir.is_dir():
-          continue
+            continue
         skill = load_skill_from_dir(skill_dir)
         if skill:
             skills.append(skill)
@@ -26,7 +26,6 @@ def load_skills_from_dir(skills_dir: Path | str) -> list[models.Skill]:
 
 
 class SkillsToolset(skill_toolset.SkillToolset):
-
     def __init__(self, skills_dir: str | Path | None):
         self.skills_dir = Path(skills_dir).resolve() if skills_dir else Path(resolve_working_path("skills"))
         self.skills_dir.mkdir(parents=True, exist_ok=True)
@@ -35,10 +34,8 @@ class SkillsToolset(skill_toolset.SkillToolset):
 
     @override
     @classmethod
-    def from_config(
-        cls: type[SkillsToolset], config: ToolArgsConfig, config_abs_path: str
-    ) -> SkillsToolset:
-        skills_dir = config.model_dump().pop("skills_dir",  None)
+    def from_config(cls: type[SkillsToolset], config: ToolArgsConfig, config_abs_path: str) -> SkillsToolset:
+        skills_dir = config.model_dump().pop("skills_dir", None)
         return cls(skills_dir)
 
     @override

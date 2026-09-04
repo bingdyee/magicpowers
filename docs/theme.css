@@ -1,0 +1,82 @@
+:root {
+  --content-max-width: 860px;
+  --reader-accent: #3f7660;
+  --reader-paper: #fffef9;
+  --reader-ink: #272925;
+}
+
+body {
+  background: var(--reader-paper);
+  color: var(--reader-ink);
+}
+
+#reading-progress {
+  background: var(--reader-accent);
+  height: 3px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 80ms linear;
+  width: 100%;
+  z-index: 9999;
+}
+
+.markdown-section {
+  font-family: ui-serif, "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+  font-size: 18px;
+  line-height: 1.9;
+  max-width: var(--content-max-width);
+}
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4 {
+  font-family: ui-sans-serif, system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.markdown-section p {
+  margin: 1em 0;
+}
+
+.markdown-section img {
+  border-radius: 4px;
+  display: block;
+  height: auto;
+  margin: 2rem auto;
+  max-height: 80vh;
+  max-width: 100%;
+}
+
+.sidebar-nav > ul > li > strong,
+.sidebar-nav > ul > li > a {
+  font-weight: 650;
+}
+
+body:not(.reading-book) #reading-progress {
+  display: none;
+}
+
+body.reading-book .markdown-section {
+  padding-bottom: 18vh;
+}
+
+@media (max-width: 768px) {
+  .markdown-section {
+    font-size: 17px;
+    line-height: 1.85;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --reader-paper: #191b19;
+    --reader-ink: #e8e5dc;
+  }
+}

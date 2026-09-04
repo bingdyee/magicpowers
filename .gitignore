@@ -16,3 +16,4 @@ agents/.*/
 .pytest_cache/
 .ruff_cache/
 output/
+docs/ebooks/
