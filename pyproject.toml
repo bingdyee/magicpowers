@@ -1,0 +1,88 @@
+[project]
+name = "magicpowers"
+version = "1.0.0"
+description = "An agentic skills framework & AI novel/comic creation methodology that works."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "ag-ui-adk>=0.7.0",
+    "beautifulsoup4>=4.15.0",
+    "ddgs>=9.16.0",
+    "google-adk>=2.8.0",
+    "litellm>=1.99.0",
+    "python-dotenv>=1.2.3",
+    "rich>=15.0.0",
+    "sqlalchemy>=2.0.52",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "supervisor>=4.3.0",
+    "pyright>=1.1.411",
+    "pytest>=9.1.1",
+    "ruff>=0.16.2",
+    "pytest-asyncio>=1.4.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["any_harness"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+serve = "any_harness.main:run_server"
+
+[tool.uv]
+link-mode = "copy" # Copy from the cache instead of linking since it's a mounted volume
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+extra-index-url = [
+    "https://mirrors.aliyun.com/pypi/simple",
+    "https://pypi.org/simple"
+]
+
+[tool.pytest.ini_options]
+testpaths = [ "tests" ]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
+
+[tool.pyright]
+include = ["any_harness"]
+venvPath = "."
+venv = ".venv"
+
+[tool.ruff]
+line-length = 120
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+    "F401", # Checks for unused imports
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "W191",  # indentation contains tabs
+    "B904",  # Allow raising exceptions without from e, for HTTPException
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
