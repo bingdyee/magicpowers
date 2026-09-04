@@ -36,6 +36,7 @@ build-backend = "hatchling.build"
 
 [project.scripts]
 serve = "any_harness.main:run_server"
+magicpowers = "any_harness.cli:cli"
 mps = "any_harness.cli:cli"
 
 [tool.uv]

@@ -16,6 +16,18 @@ uv run magicpowers ebook-convert manuscript.docx --overwrite
 PDF, DOCX, EPUB, HTML, CSV, JSON, plain text, and other supported inputs are
 passed directly to MarkItDown.
 
+Images are extracted to `<output-stem>_assets/` and Markdown image links are
+rewritten automatically. Use `--assets-dir` to select another directory:
+
+```bash
+uv run magicpowers ebook-convert book.epub --assets-dir media
+```
+
+DOCX embedded images and EPUB/HTML image resources retain their Markdown
+references. Images embedded in PDFs are extracted and appended to an
+`Extracted images` section because MarkItDown does not expose their text-flow
+positions.
+
 The reusable Python API and Google ADK toolset are also available:
 
 ```python

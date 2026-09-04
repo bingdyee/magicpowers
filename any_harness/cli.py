@@ -26,14 +26,19 @@ def cli() -> None:
     type=click.Path(path_type=Path, file_okay=True, dir_okay=False, writable=True),
     help="Output Markdown path. Defaults to the source filename with a .md extension.",
 )
+@click.option(
+    "--assets-dir",
+    type=click.Path(path_type=Path, file_okay=False, dir_okay=True, writable=True),
+    help="Image output directory. Defaults to <output-stem>_assets.",
+)
 @click.option("--overwrite", is_flag=True, help="Replace an existing output file.")
-def ebook_convert(source: Path, output: Path | None, overwrite: bool) -> None:
+def ebook_convert(source: Path, output: Path | None, assets_dir: Path | None, overwrite: bool) -> None:
     """Convert SOURCE to Markdown using MarkItDown.
 
     Supported inputs include PDF, DOCX, EPUB, HTML, CSV, JSON, and plain text.
     """
     try:
-        conversion, output_path = convert_document(source, output, overwrite=overwrite)
+        conversion, output_path = convert_document(source, output, overwrite=overwrite, assets_dir=assets_dir)
     except (DocumentConversionError, FileNotFoundError, FileExistsError, ValueError) as exc:
         raise click.ClickException(str(exc)) from exc
 
@@ -44,9 +49,9 @@ def ebook_convert(source: Path, output: Path | None, overwrite: bool) -> None:
                 "output": str(output_path),
                 "title": conversion.title,
                 "characters": len(conversion.markdown),
+                "images": len(conversion.images),
                 "backend": conversion.backend,
             },
             ensure_ascii=False,
         )
     )
-
