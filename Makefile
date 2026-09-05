@@ -24,6 +24,7 @@ install: sync ## 安装项目及开发依赖
 
 sync: ## 同步项目及开发依赖
 	$(UV) sync --all-groups
+	npm install -g docsify-cli --ignore-scripts --no-audit
 
 lock: ## 刷新依赖锁文件
 	$(UV) lock
